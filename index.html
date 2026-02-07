@@ -20,9 +20,8 @@
 
     <style type="text/css">
       /*
-        Compatibility layer:
-        These rules reduce layout inconsistencies across email clients.
-         */
+        Reduce layout inconsistencies across email clients.
+      */
       body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
       table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
       img { -ms-interpolation-mode: bicubic; }
@@ -33,9 +32,7 @@
       body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
 
       /*
-        “Blue link” overrides:
-        Some mobile/email clients auto-style phone numbers/addresses as blue links.
-        These rules keep typography consistent.
+        “Blue link” overrides
       */
       a[x-apple-data-detectors] {
         color: inherit !important;
@@ -63,8 +60,7 @@
       }
 
       /*
-        Minimal responsiveness:
-        Assignment prefers inline styles, but these small utilities help make the “email” readable on mobile.
+        Minimal responsiveness
       */
       @media screen and (max-width: 640px) {
         .container { width: 100% !important; }
@@ -80,16 +76,11 @@
 
     <!--
       Anchor targets:
-      Used for internal “jump links” like “View in browser”, “Unsubscribe”, etc.
-      Email templates often rely on these instead of advanced routing.
+      Used for internal “jump links” 
     -->
     <a id="top"></a>
 
-    <!--
-      Preheader:
-      Hidden snippet text shown by many email clients in the inbox preview line.
-      Keep short and descriptive; it impacts open rates in real email campaigns.
-    -->
+ 
     <div style="display:none; font-size:1px; color:#f3f4f6; line-height:1px; max-height:0px; max-width:0px; opacity:0; overflow:hidden;">
       This week: one AAA flop roasted, three indie games were overhyped, and a “patch notes apology tour.”
     </div>
@@ -211,8 +202,8 @@
 
             <!-- =========================
                  CONTENT BODY
-                 - All sections (intro, feature, quick hits, CTA, forms).
-                 - Kept inside one <td> to preserve email-layout stability.
+                 - All sections (intro, feature, quick hits, CTA, forms)
+                 - Kept inside one <td> to preserve stability
                  Edit points:
                  - Most styling and reactivity will need to be updated later, when
                  new features are introduced in class (or if I'm allowed to include frameworks I want
@@ -357,14 +348,13 @@
                      BROADCAST / CROSS-MEDIA HUB
                      Purpose:
                      - Mirrors modern games media
-                     - Email-campaign compatible pattern: thumbnails + CTA links (no embeds), which matches how
-                       real newsletters promote cross-platform content.
+                     - Email-campaign compatible pattern: thumbnails + CTA links (no embeds), promote cross-platform content
                      - Designed for reuse: each channel card follows the same structure and the "Latest Drops"
-                       list is populated from JS objects (with HTML fallback).
+                       list is populated from JS objects (with HTML fallback)
                      Edit points:
-                     - Replace /images/media-*-a.png and /images/media-*-b.png with real thumbnails later.
+                     - Replace /images/media-*-a.png and /images/media-*-b.png with real thumbnails later
                      - Replace href="#" with real channel URLs
-                     - The simulator button is web-preview only; a real implementation would be server-driven.
+                     - The simulator button is web-preview only; a real implementation would be server-driven
                      ========================= -->
                 <div id="media" style="margin-top:16px; padding:16px; border:1px solid #e5e7eb; background-color:#ffffff;">
                   <h2 style="margin:0 0 6px 0; font-size:18px; line-height:24px; color:#111827;">
@@ -511,8 +501,8 @@
                 <!-- =========================
                      PRIMARY CTA
                      Purpose:
-                     - Clear conversion action (subscribe) in a campaign-style layout.
-                     - When this is made to work for real, this will go to an external landing page.
+                     - Clear conversion action (subscribe) in layout
+                     - When this is made to work for real, this will go to an external landing page
                      Edit points:
                      - Change href to a real route later (signup.html / React route / etc.)
                      ========================= -->
@@ -532,9 +522,9 @@
                      SUBSCRIBE FORM (WEB PREVIEW)
                      Purpose:
                      - Data capture UI
-                     - JS provides lightweight validation + user feedback.
+                     - JS provides lightweight validation + user feedback
                      Note:
-                     - This will need to be modified later with different frameworks.
+                     - This will need to be modified later with different frameworks
                      ========================= -->
                 <div id="subscribe" style="margin-top:18px; padding:16px; border:1px solid #e5e7eb; background-color:#ffffff;">
                   <h2 style="margin:0 0 10px 0; font-size:18px; line-height:24px; color:#111827;">
@@ -701,17 +691,17 @@
     </table>
 
     <!-- =========================
-         JAVASCRIPT (WEB PREVIEW ONLY)
+         JAVASCRIPT 
          Purpose:
-         - Provides basic interactivity (image swapping, object-based rendering, basic validation, and media alert simulation).
+         - Provides basic interactivity (image swapping, object-based rendering, basic validation, and media alert simulation)
          - Kept modular for easy replacements with real app logic later
          ========================= -->
     <script>
       (function () {
         "use strict";
 
-        // Lightweight in-memory state for this web preview.
-        // In production, these preferences would live in a backend (I want to use Django) + database (probably Sqlite).
+        // Lightweight in-memory state for this web preview
+        // In production, these preferences would live in a backend (I want to use Django) + database (probably Sqlite)
         var appState = {
           subscriber: {
             email: null,
@@ -727,9 +717,9 @@
 
         /*
           setupImageSwaps()
-          - Generic swap handler for any <img data-toggle="swap">.
-          - Uses data-src-a / data-src-b attributes to avoid hardcoding file paths in JS.
-          - Adds keyboard support (Enter / Space) for accessibility.
+          - Generic swap handler for any <img data-toggle="swap">
+          - Uses data-src-a / data-src-b attributes to avoid hardcoding file paths in JS
+          - Adds keyboard support (Enter / Space) for accessibility
         */
         function setupImageSwaps() {
           var imgs = document.querySelectorAll('img[data-toggle="swap"]');
@@ -748,7 +738,7 @@
                 img.setAttribute("src", isA ? b : a);
                 img.setAttribute("aria-pressed", isA ? "true" : "false");
 
-                // Only the hero has a dynamic caption; other swaps are self-explanatory.
+                // Only the hero has a dynamic caption; other swaps are self-explanatory
                 if (img.id === "heroImg") {
                   var cap = document.getElementById("heroCaption");
                   if (cap) cap.textContent = isA
@@ -771,8 +761,8 @@
 
         /*
           renderQuickHits()
-          - Demonstrates a simple “content model” (array of objects) rendered into the DOM.
-          - Keeps fallback HTML in place for non-JS environments.
+          - Demonstrates a simple “content model” (array of objects) rendered into the DOM
+          - Keeps fallback HTML in place for non-JS environments
         */
         function renderQuickHits() {
           var target = document.getElementById("jsReviews");
@@ -799,8 +789,8 @@
 
         /*
           renderMediaDrops()
-          - Same pattern as Quick Hits: a small content model (array of objects) rendered into the DOM.
-          - This models how a backend could supply the latest video/stream entries for a newsletter.
+          - Same pattern as Quick Hits: a small content model (array of objects) rendered into the DOM
+          - This models how a backend could supply the latest video/stream entries for a newsletter
         */
         function renderMediaDrops() {
           var target = document.getElementById("jsMediaDrops");
@@ -826,9 +816,9 @@
 
         /*
           setupUploadSimulator()
-          - Web preview only: simulates “a new upload happened” and shows what an email alert might look like.
-          - The alert only "fires" if the subscriber opted into video_alerts in the Subscribe section.
-          - In a real system, this logic belongs server-side (polling webhooks/APIs + sending email).
+          - Web preview only: simulates “a new upload happened” and shows what an email alert might look like
+          - The alert only "fires" if the subscriber opted into video_alerts in the Subscribe section
+          - In a real system, this logic belongs server-side (polling webhooks/APIs + sending email)
         */
         function setupUploadSimulator() {
           var btn = document.getElementById("simulateUploadBtn");
@@ -861,7 +851,7 @@
         /*
           setupSubscribeForm()
           - Lightweight web preview
-          - To do later: send to backend endpoint + show server response states.
+          - To do later: send to backend endpoint + show server response states
         */
         function setupSubscribeForm() {
           var form = document.getElementById("subscribeForm");
@@ -881,7 +871,7 @@
             }
 
             
-            // Read preference checkboxes (supports future expansion with more options).
+            // Read preference checkboxes (supports future expansion with more options)
             var checked = form.querySelectorAll('input[type="checkbox"][name="prefs"]:checked');
             var prefs = { alerts: false, newsletter: false, deals: false, video_alerts: false };
 
@@ -889,7 +879,7 @@
               prefs[checked[i].value] = true;
             }
 
-            // Persist state for the web preview (simulates what a backend would store).
+            // Persist state for the web preview (simulates what a backend would store)
             appState.subscriber.email = email;
             appState.subscriber.prefs = prefs;
 
@@ -913,7 +903,7 @@
 
         /*
           setupContactForm()
-          - Simulates sending a message for demo purposes (no backend).
+          - Simulates sending a message for demo purposes (no backend)
           - Replace with fetch() to an API route for server-side email handling later
         */
         function setupContactForm() {
