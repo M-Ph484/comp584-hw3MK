@@ -145,9 +145,14 @@
         border-color: #334155 !important;
       }
             /* Swap to a darker banner asset in dark mode for better contrast. */
-      body.dark .bg-banner { background-image: url('images/banner-dark.png') !important; }
-
-      body.dark input::placeholder, body.dark textarea::placeholder {
+      /* Dark-mode banner swap NOTE:
+         - The banner is an <img id="bannerImg">, not a CSS background.
+         - We swap the banner <img> src + data-src-* in JS when Dark Mode toggles.
+         - Assets expected:
+           Light: images/banner-a.png, images/banner-b.png
+           Dark:  images/banner-dark.png, images/banner-dark-b.png
+      */
+body.dark input::placeholder, body.dark textarea::placeholder {
         color: #94a3b8 !important;
       }
 
@@ -1051,6 +1056,44 @@
         // Boot sequence: to be expanded later
 
         // 5) Accessibility modes (web preview): Dark Mode + Reader Mode toggles
+        
+        /*
+          applyBannerTheme(isDark)
+          Fixes: “dark banner isn’t appearing in dark mode”
+          Root cause:
+            - The banner is an <img>, not a CSS background, so CSS background-image swaps won’t affect it.
+            - We must swap the <img> src and its data-src-* attributes so click-toggle still works in both themes.
+          Assets expected in /images:
+            Light: banner-a.png, banner-b.png
+            Dark:  banner-dark.png, banner-dark-b.png
+
+          Future note:
+            - Eventually, migrate the web app UI to a component library (e.g., MUI) to centralize theming,
+              improve accessibility primitives, and avoid inline-style override hacks like this.
+        */
+        function applyBannerTheme(isDark) {
+          var banner = document.getElementById("bannerImg");
+          if (!banner) return;
+
+          var lightA = "images/banner-a.png";
+          var lightB = "images/banner-b.png";
+          var darkA  = "images/banner-dark.png";
+          var darkB  = "images/banner-dark-b.png";
+
+          // Preserve which variant the user is currently seeing (A vs B)
+          var currentA = banner.getAttribute("data-src-a") || lightA;
+          var currentSrc = banner.getAttribute("src") || "";
+          var showingA = (currentSrc === currentA);
+
+          // Update toggle sources for the active theme
+          banner.setAttribute("data-src-a", isDark ? darkA : lightA);
+          banner.setAttribute("data-src-b", isDark ? darkB : lightB);
+
+          // Keep A/B state consistent across theme flips
+          banner.setAttribute("src", showingA ? (isDark ? darkA : lightA) : (isDark ? darkB : lightB));
+        }
+
+
         function setupA11yToggles() {
           var darkBtn = document.getElementById("toggleDark");
           var readerBtn = document.getElementById("toggleReader");
@@ -1062,7 +1105,10 @@
             var reader = localStorage.getItem("rq_reader") === "1";
             if (dark) document.body.classList.add("dark");
             if (reader) document.body.classList.add("reader");
-          } catch (e) {}
+          
+            // Sync banner assets to the restored theme state.
+            applyBannerTheme(dark);
+} catch (e) {}
 
           function toggleClass(cls, key) {
             document.body.classList.toggle(cls);
@@ -1071,7 +1117,7 @@
             } catch (e) {}
           }
 
-          darkBtn.addEventListener("click", function () { toggleClass("dark", "rq_dark"); });
+          darkBtn.addEventListener("click", function () { toggleClass("dark", "rq_dark"); applyBannerTheme(document.body.classList.contains("dark")); });
           readerBtn.addEventListener("click", function () { toggleClass("reader", "rq_reader"); });
 
           var imgBtn = document.getElementById("toggleImages");
