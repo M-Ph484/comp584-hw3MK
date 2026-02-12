@@ -186,7 +186,9 @@ body.dark input::placeholder, body.dark textarea::placeholder {
          Implementation:
          - Toggles CSS classes on <body> and persists preferences in localStorage.
          ============================================================ -->
-    <div aria-labelledby="toggleDark toggleReader toggleImages" style="max-width:600px; margin:0 auto; padding:12px 12px 6px 12px; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;">
+    
+    <section>
+      <div aria-labelledby="toggleDark toggleReader toggleImages" style="max-width:600px; margin:0 auto; padding:12px 12px 6px 12px; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;">
       <table role="presentation" border="0" cellpadding="0" cellspacing="0" align="center" style="margin:0 auto;">
         <tr>
           <td align="center" style="padding:0;">
@@ -205,12 +207,13 @@ body.dark input::placeholder, body.dark textarea::placeholder {
           </td>
         </tr>
       </table>
-
+</section>
+<section> 
       <div aria-labelledby="toggleDark toggleReader toggleImages" style="margin-top:8px; font-size:11px; line-height:16px; color:#6b7280; text-align:center;">
         Web preview only • Keyboard: Tab to buttons, Enter to toggle
       </div>
     </div>
-
+</section>
 
  
     <div style="display:none; font-size:1px; color:#f3f4f6; line-height:1px; max-height:0px; max-width:0px; opacity:0; overflow:hidden;">
@@ -222,6 +225,7 @@ body.dark input::placeholder, body.dark textarea::placeholder {
       Email-safe centering + background color block.
       Tables were used to keep the layout consistent.
     -->
+   <section>
     <table aria-labelledby="toggleDark toggleReader toggleImages" border="0" cellpadding="0" cellspacing="0" width="100%" role="presentation" style="background-color:#f3f4f6;">
       <tr>
         <td align="center" style="padding: 20px 12px;">
@@ -267,7 +271,7 @@ body.dark input::placeholder, body.dark textarea::placeholder {
                 </div>
               </td>
             </tr>
-
+</section>
             <!-- =========================
                  INTERACTIVE BANNER 
                  Purpose:
@@ -293,9 +297,11 @@ body.dark input::placeholder, body.dark textarea::placeholder {
                     style="display:block; width:544px; max-width:100%; height:auto; border:1px solid #e5e7eb; cursor:pointer;"
                     class="fluid-img"
                   />
+                  <section>
                   <div aria-labelledby="bannerImg" style="margin-top:8px; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif; font-size:12px; line-height:18px; color:#6b7280;">
                     Click banner to toggle <strong>glitch mode</strong>.
                   </div>
+                  </section>
                 </div>
               </td>
             </tr>
@@ -325,9 +331,11 @@ body.dark input::placeholder, body.dark textarea::placeholder {
                     style="display:block; width:544px; max-width:100%; height:auto; border:1px solid #e5e7eb; cursor:pointer;"
                     class="fluid-img"
                   />
+                  <section>
                   <div aria-labelledby="heroImg" id="heroCaption" style="margin-top:10px; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif; font-size:13px; line-height:18px; color:#6b7280;">
                     Cover shot (click to swap to “Evidence Mode”).
                   </div>
+                  </section>
                 </div>
               </td>
             </tr>
