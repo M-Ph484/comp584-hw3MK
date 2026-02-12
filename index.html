@@ -84,7 +84,8 @@
 
       /* ============================================================
          ACCESSIBILITY MODES (WEB PREVIEW)
-         - These classes are toggled on <body> by the accessibility buttons
+         - These classes are toggled on <body> by the accessibility buttons.
+         - Email clients may ignore this; GitHub Pages preview will honor it.
          ============================================================ */
       body.dark { background-color: #0b1220 !important; }
       body.dark table[role="presentation"] { background-color: #0b1220 !important; }
@@ -108,12 +109,12 @@
          DARK THEME OVERRIDES (WEB PREVIEW)
          Future note:
          - Eventually, migrate the web app UI to a component library (e.g., MUI) to centralize theming,
-           improve accessibility primitives, and avoid inline-style overrides for dark mode
+           improve accessibility primitives, and avoid inline-style overrides for dark mode.
          Problem:
-         - Many blocks use inline background colors (email-style). Inline styles win unless overridden with !important
+         - Many blocks use inline background colors (email-style). Inline styles win unless we override with !important.
          Fix:
-         - Use a small set of utility classes + attribute selectors for common inline background colors
-         - Apply "theme-surface" / "theme-muted" classes to key boxes so we can control them in dark mode
+         - Use a small set of utility classes + attribute selectors for common inline background colors.
+         - Apply "theme-surface" / "theme-muted" classes to key boxes so we can control them in dark mode.
          ============================================================ */
       body.dark .theme-surface { background-color: #0f172a !important; border-color: #334155 !important; }
       body.dark .theme-muted   { background-color: #111827 !important; border-color: #334155 !important; }
@@ -143,9 +144,11 @@
         color: #e5e7eb !important;
         border-color: #334155 !important;
       }
-            
+            /* Swap to a darker banner asset in dark mode for better contrast. */
       /* Dark-mode banner swap NOTE:
-         - The banner is an <img id="bannerImg">, not a CSS background
+         - The banner is an <img id="bannerImg">, not a CSS background.
+         - We swap the banner <img> src + data-src-* in JS when Dark Mode toggles.
+         - Assets expected:
            Light: images/banner-a.png, images/banner-b.png
            Dark:  images/banner-dark.png, images/banner-dark-b.png
       */
@@ -157,7 +160,7 @@ body.dark input::placeholder, body.dark textarea::placeholder {
   </head>
 
   <body id="body" style="margin: 0 !important; padding: 0 !important; background-color: #f3f4f6;">
-    <!-- Skip link improves keyboard navigation (especially for screen reader and power users) -->
+    <!-- Skip link improves keyboard navigation (especially for screen reader and power users). -->
     <a href="#main" style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
       Skip to main content
     </a>
@@ -359,8 +362,11 @@ body.dark input::placeholder, body.dark textarea::placeholder {
                 <!-- =========================
                      FEATURED ROAST SECTION
                      Purpose:
-                     - Primary content module (what users should read first)
-                     - Uses a nested table for the 2-column layout
+                     - Primary content module (what users should read first).
+                     - **HW3 update:** converted from a 2-column table into a TRUE single-column table layout.
+                       Reasoning:
+                       * Email clients are more reliable with simple vertical flow (fewer side-by-side columns).
+                       * Accessibility: reading order is naturally top-to-bottom (image → bullets → score) for screen readers.
                      Edit points:
                      - Replace feature images (feature1-a/b)
                      - Update bullet points + copy
@@ -375,10 +381,14 @@ body.dark input::placeholder, body.dark textarea::placeholder {
                     against the people I played as.
                   </p>
 
-                  <!-- 2-column block: image left, text right -->
+                  <!-- Single-column block: image first, then critique copy.
+                       Email/dev notes:
+                       - Stays within the “one column” requirement while keeping layout stable.
+                       - Uses a single <td> so Outlook and other strict clients render predictably. -->
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
                     <tr>
-                      <td class="stack" width="48%" valign="top" style="padding: 0 8px 0 0;">
+                      <td valign="top" style="padding:0;">
+
                         <img
                           src="images/feature1-a.png"
                           data-src-a="images/feature1-a.png"
@@ -386,17 +396,16 @@ body.dark input::placeholder, body.dark textarea::placeholder {
                           data-toggle="swap"
                           tabindex="0"
                           alt="Screenshot: review highlight"
-                          width="250"
-                          style="display:block; width:250px; max-width:100%; height:auto; border:1px solid #e5e7eb; cursor:pointer;"
+                          width="544"
+                          style="display:block; width:544px; max-width:100%; height:auto; border:1px solid #e5e7eb; cursor:pointer;"
                           class="fluid-img"
                         />
                         <div style="margin-top:8px; font-size:12px; line-height:18px; color:#6b7280;">
                           Click to toggle: “Trailer” ⇄ “In-game reality.”
                         </div>
-                      </td>
 
-                      <td class="stack" width="52%" valign="top" style="padding: 0 0 0 8px;">
-                        <div style="padding:0; margin:0;">
+                        <div style="margin-top:12px; padding:0;">
+
                           <ul style="margin:0; padding:0 0 0 18px; font-size:14px; line-height:22px; color:#374151;">
                             <li><strong>UI:</strong> Designed by someone who hates eyes.</li>
                             <li><strong>Combat:</strong> I wish I could beat up the person I'm playing as because he's so inept.</li>
@@ -411,7 +420,7 @@ body.dark input::placeholder, body.dark textarea::placeholder {
                           <!-- =========================
                                SCORE BADGE
                                Purpose:
-                               - Converts the score into a scannable visual element 
+                               - Converts the score into a scannable visual element.
                                - Toggle demonstrates “state change” (roast vs praise) using the same swap handler.
                                Edit points:
                                - Swap images/score-03.png and images/score-09.png
@@ -435,12 +444,13 @@ body.dark input::placeholder, body.dark textarea::placeholder {
                           </div>
 
                         </div>
+
                       </td>
                     </tr>
                   </table>
                 </div>
 
-                <!-- =========================
+<!-- =========================
                      QUICK HITS
                      Purpose:
                      - Secondary content block.
