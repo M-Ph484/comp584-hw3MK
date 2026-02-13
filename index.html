@@ -22,6 +22,8 @@
       /*
         Reduce layout inconsistencies across email clients.
       */
+       
+
       body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
       table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
       img { -ms-interpolation-mode: bicubic; }
@@ -32,7 +34,7 @@
       body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
 
       /*
-        “Blue link” overrides
+        “Blue link” overrides, forces inherit color/style on auto-detected dates/addresses
       */
       a[x-apple-data-detectors] {
         color: inherit !important;
@@ -85,7 +87,7 @@
       /* ============================================================
          ACCESSIBILITY MODES (WEB PREVIEW)
          - These classes are toggled on <body> by the accessibility buttons.
-         - Email clients may ignore this; GitHub Pages preview will honor it.
+         - Email clients may ignore this; GitHub Pages preview will make it appears
          ============================================================ */
       body.dark { background-color: #0b1220 !important; }
       body.dark table[role="presentation"] { background-color: #0b1220 !important; }
